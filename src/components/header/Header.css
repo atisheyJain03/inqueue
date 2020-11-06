@@ -1,0 +1,22 @@
+.header {
+  height: 80px;
+  padding: 0 5vw;
+  background: #030406;
+
+  position: sticky;
+}
+
+.header__buttons {
+  padding-top: 20px;
+}
+
+.header img {
+  height: 100%;
+
+  display: block;
+}
+
+.header form {
+  height: 80px;
+  align-items: center;
+}
