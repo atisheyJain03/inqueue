@@ -4,7 +4,7 @@ import CardShop from "../CardShop/CardShop"
 
 const useStyles = makeStyles((theme) => ({
   grid_container: {
-      width:"95%",
+      width:"80%",
       margin:"auto"
   },
   root:{
@@ -16,17 +16,26 @@ function Main() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Grid container className={classes.grid_container}  >
-                <Grid item sm={12} md ={3}  >
-                    <p>grid 1</p>
-                </Grid>
-                <Grid item sm={12} md ={9}  >
+            <Grid container className={classes.grid_container}  justify="space-around"  >
+                
+            <Grid item xs={12} sm={6} lg ={4}  >
                   <CardShop />  
-                  <CardShop />
-                  <CardShop />
-                  <CardShop />
+                  </Grid>
+                  <Grid item xs={12} sm={6} lg ={4}  >
                   <CardShop />  
-                </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={6} lg ={4}  >
+                  <CardShop />  
+                  </Grid>
+                  <Grid item xs={12} sm={6} lg ={4}  >
+                  <CardShop />  
+                  </Grid>
+                  <Grid item xs={12} sm={6} lg ={4}  >
+                  <CardShop />  
+                  </Grid>
+                  <Grid item xs={12} sm={6} lg ={4}  >
+                  <CardShop />  
+                  </Grid>   
             </Grid>    
         </div>
     )
