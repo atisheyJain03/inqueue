@@ -4,10 +4,12 @@ import "./Navbar.css";
 import logo from "../../logo.png";
 
 import backgroundImg from "../../images/background.jpg";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles(() => ({
   root: {
     backgroundColor: "transparent",
+    cursor: "pointer",
     "& ::placeholder": {
       color: "#e0e0e0",
       opacity: 0.8,
@@ -53,6 +55,7 @@ const useStyle = makeStyles(() => ({
 }));
 
 function Navbar() {
+  const history = useHistory();
   const classes = useStyle();
   return (
     <div
@@ -63,7 +66,7 @@ function Navbar() {
         backgroundPosition: "center",
       }}
     >
-      <img src={logo} className="navbar__image"></img>
+      <img src={logo} className="navbar__image" onClick={() => history.push('/shops')}></img>
       <div className="navbar__buttons">
         <Button
           elevation={5}

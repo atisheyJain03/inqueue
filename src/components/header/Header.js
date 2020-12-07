@@ -1,5 +1,6 @@
 import { Button, Grid, Input, makeStyles } from "@material-ui/core";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import logo from "../../logo.png";
 import "./Header.css";
 const useStyle = makeStyles(() => ({
@@ -55,6 +56,8 @@ const useStyle = makeStyles(() => ({
 }));
 
 function Header() {
+  const history = useHistory();
+  console.log(history)
   const classes = useStyle();
   return (
     <Grid
@@ -70,7 +73,7 @@ function Header() {
           item: classes.grid_item,
         }}
       >
-        <img src={logo} />
+        <img src={logo} onClick={() => history.push('/shops')}/>
       </Grid>
       {/* <Grid
         item

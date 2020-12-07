@@ -11,11 +11,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Rating } from '@material-ui/lab';
+import Ratings from '../ratings/Ratings';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    margin:'auto',
+    // margin:'auto !important',
     marginBottom: 20,
   },
   media: {
@@ -40,9 +42,9 @@ const useStyles = makeStyles({
 
 export default function MediaCard() {
   const classes = useStyles();
-
+  const history = useHistory();
   return (
-    <Card className={classes.root} elevation={5}>
+    <Card className={classes.root} elevation={5} onClick={() => history.push(`/shops/${faker.random.number()}`)}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -55,10 +57,7 @@ export default function MediaCard() {
           <Typography gutterBottom variant="h6" component="h2">
             {faker.name.jobType()}
           </Typography>
-          <Typography gutterBottom variant="h6" component="h2">
-             <Rating name="half-rating" defaultValue={4} precision={0.5} readOnly/>
-             <span className={classes.span_ratings}>({faker.random.number()} Ratings)</span>
-          </Typography>
+          <Ratings rating={4} total={faker.random.number()} />
           
           <Typography variant="body2" color="textSecondary" component="p"  gutterBottom className={classes.para_info} >
            {faker.lorem.paragraphs()}

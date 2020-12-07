@@ -4,7 +4,7 @@ import CardShop from "../CardShop/CardShop"
 
 const useStyles = makeStyles((theme) => ({
   grid_container: {
-      width:"80%",
+      width:"85%",
       margin:"auto"
   },
   root:{
@@ -20,22 +20,22 @@ function Main() {
                 
             <Grid item xs={12} sm={6} lg ={4}  >
                   <CardShop />  
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg ={4}  >
-                  <CardShop />  
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg ={4}  >
-                  <CardShop />  
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg ={4}  >
-                  <CardShop />  
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg ={4}  >
-                  <CardShop />  
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg ={4}  >
-                  <CardShop />  
-                  </Grid>   
+            </Grid>
+            <Grid item xs={12} sm={6} lg ={4}  >
+                <CardShop />  
+            </Grid>
+            <Grid item xs={12} sm={6} lg ={4}  >
+                <CardShop />  
+            </Grid>
+            <Grid item xs={12} sm={6} lg ={4}  >
+                <CardShop />  
+            </Grid>
+            <Grid item xs={12} sm={6} lg ={4}  >
+                <CardShop />  
+            </Grid>
+            <Grid item xs={12} sm={6} lg ={4}  >
+                <CardShop />  
+            </Grid>   
             </Grid>    
         </div>
     )
