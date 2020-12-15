@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import axios from '../../axios';
 import Loader from '../Loader/Loader';
 
+
+// THIS IS BUTTON FOR GENERATING TICKET
+// THIS WILL MAKE A REQUEST TO SERVER WHICH WILL GET PLACE IN QUEUE FOR GIVEN SERVICE WITH THE LOGGED IN USER
 function ButtonShopPage({serviceId , setQueueInfo}) {
     const [isLoading,setIsLoading] = useState(false)
     
     const clickHandler = (event) => {
-       
         event.preventDefault();
         setIsLoading(true);
         ( async () => {

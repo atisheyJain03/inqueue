@@ -1,10 +1,9 @@
-import { Button, Grid, makeStyles, MenuItem, Select, Typography } from '@material-ui/core'
+import {  Grid, makeStyles, MenuItem, Select, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import faker from 'faker'
-import { Rating } from '@material-ui/lab';
 import Ratings from '../ratings/Ratings';
 import axios from '../../axios';
 import ButtonShopPage from './ButtonShopPage';
+import Axios from 'axios';
 
 const useStyle = makeStyles((theme) => ({
     main_div: {
@@ -61,34 +60,49 @@ const useStyle = makeStyles((theme) => ({
 
 
 function ShopPage() {
-    // let options =[{}];
     const classes = useStyle();
+    // pageData =  STORE ALL PAGE DATA WILL GET WHEN PAGE WILL RENDER / COMPONENT WILL MOUNT IN USE EFFECT
     const [pageData , setPageData] = useState({})
+    
+    // GET INFO ABOUT QUEUE LIKE TOTAL nUMBERS , CURRENT NUMBER , WAITING TIME
     const [queueInfo , setQueueInfo] = useState({})
+    
+    // THIS IS SELECT OPTION IN DROP DOWN THIS WILL STORE ID OF THE SERVICE SELLECTED
     const [selectOption , setSelectOption] = useState("")
     
      useEffect(()=>{
+          // THIS IS CANCEL TOKEN IN CASE IF COMPONENT UNMOUNT BEFORE GETTING RESPONSE FROM SERVER
+          const source = Axios.CancelToken.source();
+          
+         // GET ID OF PAGE WHICH WILL COME IN URL 
+         // SP THAT WE CAN GET PAGE DATA
          const id= window.location.pathname.split('/')[2];
-        //  console.log(id)
+         // IIFE
         (
             async ()=> {
                 try{
-                    const shopRes = await axios.get(`/shops/getShop/${id}`);
-                    // console.log(shopRes.data.data.shop)
+                    const shopRes = await axios.get(`/shops/getShop/${id}`, {
+                        cancelToken: source.token
+                    });
                     setPageData(shopRes.data.data.shop)
-                    
-                    
                 } catch (err) {
-                    console.log(err)
+                    // console.log(err)
                     alert(err.message);
                 }
             }
         )();
+        return () => {
+            source.cancel();
+          } 
     },[])
-    console.log(pageData)
+    
+    // DROPDOWN ONCHANGE HANDLER
     const dropdownOnChange = (event) => {
-        console.log(event.target.value)
         
+        // VALUE FROM DROPDOWN (STORE ID)
+        console.log(event.target.value)   
+        
+        // SEARCH OBJECT WITH SELECTED ID IN DROPDOWN TO STORE QUEUE DATA
         for(let i = 0; i < pageData.serviceBy.length; i++) {
             if(pageData.serviceBy[i].id === event.target.value) {
                 setSelectOption( event.target.value )
@@ -182,6 +196,10 @@ function ShopPage() {
                             </Typography>
                         </div> : null }
                         <div style={{ marginTop: '2rem' , marginLeft: 'auto' }} className= {classes.dropdownRoot}>
+                        {
+                        /* DROPDOWN REFRENCES VIDEO */
+                        /* https://www.youtube.com/watch?v=FTVL36d1gXY&t=351s&ab_channel=phpstepbystep */
+                        }
                             <Select value={selectOption} displayEmpty autoWidth onChange={dropdownOnChange } >
                             <MenuItem key={"empty"} disabled value="">Select An Option</MenuItem>
                               ( { pageData.serviceBy ?

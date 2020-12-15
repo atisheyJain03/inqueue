@@ -3,7 +3,6 @@ import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import Input from "./components/navbar/input.js";
 import Header from "./components/header/Header";
-import Main from "./components/main/Main";
 import ShopPage from "./components/ShopPage/ShopPage";
 
 import {
@@ -16,6 +15,7 @@ import Login from "./components/login/Login";
 import SignUp from "./components/signUp/Signup";
 import Dropdown from "react-dropdown";
 import 'react-dropdown/style.css';
+import Allshops from "./components/main/AllShops";
 
 function App() {
   const options = [
@@ -35,7 +35,7 @@ function App() {
           <Navbar />
         </Route>
         <Route exact path="/shops" >
-          <Main />
+          <Allshops />
         </Route>
         <Route exact path="/shops/:id" >
            <ShopPage />
