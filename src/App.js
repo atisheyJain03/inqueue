@@ -12,11 +12,23 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Login from "./components/login/Login";
+import SignUp from "./components/signUp/Signup";
+import Dropdown from "react-dropdown";
+import 'react-dropdown/style.css';
 
 function App() {
+  const options = [
+   {value: {
+     name: 'Atishey',
+     lastName :"jain"
+   },
+   label : 'hello'
+  }
+  ];
   return (
     <div className="App">
-     
+     {/* <Dropdown options={options} placeholder="Select an option" onChange= {(value) => console.log(value)} /> */}
       <Router>
       <Header />
         <Route exact path="/" >
@@ -26,7 +38,13 @@ function App() {
           <Main />
         </Route>
         <Route exact path="/shops/:id" >
-        <ShopPage />
+           <ShopPage />
+        </Route>
+        <Route path="/login" >
+          <Login />  
+        </Route>
+        <Route path="/signUp" >
+          <SignUp />  
         </Route>
       </Router>
     </div>

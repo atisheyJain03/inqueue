@@ -43,7 +43,7 @@ const useStyle = makeStyles(() => ({
 
   button__outline_primary: {
     border: "3px solid #e0e0e0",
-    color: "#e0e0e0",
+    color: "black",
     letterSpacing: 1,
     // "& :hover": {
     //   border: "3px solid #e0e0e0",
@@ -93,6 +93,7 @@ function Header() {
       >
         <div className="header__buttons">
           <Button
+            onClick={() => history.push('/login')}
             elevation={5}
             variant="outlined"
             color="primary"
@@ -111,6 +112,7 @@ function Header() {
           </Button>
 
           <Button
+          onClick={() => history.push('/signUp')}
             elevation={5}
             variant="outlined"
             color="primary"

@@ -1,9 +1,9 @@
 .header {
   height: 80px;
   padding: 0 5vw;
-  background: #030406;
-
+  background: #f0f0f0;
   position: sticky;
+  border-bottom: 1px solid #d6d6d6;
 }
 
 .header__buttons {

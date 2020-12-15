@@ -1,8 +1,10 @@
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core'
-import React from 'react'
+import { Button, Grid, makeStyles, MenuItem, Select, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
 import faker from 'faker'
 import { Rating } from '@material-ui/lab';
 import Ratings from '../ratings/Ratings';
+import axios from '../../axios';
+import ButtonShopPage from './ButtonShopPage';
 
 const useStyle = makeStyles((theme) => ({
     main_div: {
@@ -48,33 +50,73 @@ const useStyle = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')] : {
             padding: '0 1.5rem'
         }
+    },
+    dropdownRoot: {
+        "& .MuiInputBase-root" : {
+            display: 'block'
+        }
     }
 }))
 
 
+
 function ShopPage() {
+    // let options =[{}];
     const classes = useStyle();
-    console.log(faker.date.between())
+    const [pageData , setPageData] = useState({})
+    const [queueInfo , setQueueInfo] = useState({})
+    const [selectOption , setSelectOption] = useState("")
+    
+     useEffect(()=>{
+         const id= window.location.pathname.split('/')[2];
+        //  console.log(id)
+        (
+            async ()=> {
+                try{
+                    const shopRes = await axios.get(`/shops/getShop/${id}`);
+                    // console.log(shopRes.data.data.shop)
+                    setPageData(shopRes.data.data.shop)
+                    
+                    
+                } catch (err) {
+                    console.log(err)
+                    alert(err.message);
+                }
+            }
+        )();
+    },[])
+    console.log(pageData)
+    const dropdownOnChange = (event) => {
+        console.log(event.target.value)
+        
+        for(let i = 0; i < pageData.serviceBy.length; i++) {
+            if(pageData.serviceBy[i].id === event.target.value) {
+                setSelectOption( event.target.value )
+                setQueueInfo({...pageData.serviceBy[i]})
+                break;
+            }
+        }
+    }
     return (
         <div className={classes.main_div} align="left">
             <Grid container >
                 <Grid item xs={12}  >
-                <img src="https://www.w3schools.com/css/img_5terre_wide.jpg"  className={classes.shopPage__img}/>
+                <img src={pageData.imageCover}  className={classes.shopPage__img}/>
                 </Grid>
                 <Grid item xs={12}  lg ={9}  >
                    <Grid container style={{ marginTop: '1rem' }} >
                        <Grid item xs={12} sm={9} >
                            <div  className={classes.heading__div} align="left">
                            <Typography  variant="h4" component="h2" className={classes.heading}>
-                                {faker.company.companyName()}
+                                {pageData.name}
                             </Typography>
                             <Typography gutterBottom variant="h6" component="h2">
-                                {faker.name.jobType()}
+                                {pageData.shopType}
                             </Typography>
                            </div>
                        </Grid>
                        <Grid item sm={3} xs={12} >
-                       <Ratings rating={4} total={faker.random.number()} />
+                       <Ratings rating={pageData.ratingsAverage} total={pageData.ratingsQuantity} />
                        </Grid>
                    </Grid>
                    <Grid container justify="space-between" >
@@ -84,7 +126,7 @@ function ShopPage() {
                                 contact
                             </Typography>
                             <Typography  variant="overline" component="h2">
-                               1798 sector-13 Urban Estate
+                               {pageData.address}
                             </Typography>
                             <Typography  variant="overline" component="h2">
                                karnal - 13200
@@ -94,7 +136,7 @@ function ShopPage() {
                             </Typography>
                             <div style={{marginTop : '0.5rem' }}>
                             <Typography  variant="overline" component="h2">
-                              tel : {faker.phone.phoneNumber()}
+                              tel : {pageData.phoneNumber}
                             </Typography>
                             </div>
                            </div>
@@ -105,7 +147,7 @@ function ShopPage() {
                                 info
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p"  gutterBottom className={classes.para_info} align="justify" >
-                                    {faker.lorem.paragraphs()}
+                                    {pageData.info}
                             </Typography>
                            </div>
                        </Grid>
@@ -126,21 +168,37 @@ function ShopPage() {
                             </Typography>
                             </div>
                     </Grid>
-                    <Grid item xs={12} >
+                    <Grid item xs={12}  >
+                        { selectOption ?
                         <div className={classes.waiting__time}>
                             <Typography  variant="overline" component="h2">
                                 Estimate waiting time - 20 min
                             </Typography>
                             <Typography  variant="overline" component="h2">
-                               Current number - 10
+                               Current number - {queueInfo.currentNumber}
                             </Typography>
                             <Typography  variant="overline" component="h2">
-                               Total numbers - 14
+                               Total numbers - {queueInfo.totalNumber}
                             </Typography>
+                        </div> : null }
+                        <div style={{ marginTop: '2rem' , marginLeft: 'auto' }} className= {classes.dropdownRoot}>
+                            <Select value={selectOption} displayEmpty autoWidth onChange={dropdownOnChange } >
+                            <MenuItem key={"empty"} disabled value="">Select An Option</MenuItem>
+                              ( { pageData.serviceBy ?
+                                    pageData.serviceBy.map(service => {
+                                        return(
+                                            <MenuItem key={service.id} value={service.id}>{service.name}</MenuItem>
+                                        )
+                                    }) : null
+                                } )   
+                            
+                            </Select>
                         </div>
                         <div style={{ marginTop: '2rem'}}>
-                            <Button variant="contained" fullWidth size="large" > generate a ticket </Button>
-                        </div>
+                          {selectOption ?
+                             <ButtonShopPage serviceId = {selectOption} setQueueInfo ={setQueueInfo} />
+                         : null }
+                         </div>
                     </Grid>
                 </Grid>
              </Grid>

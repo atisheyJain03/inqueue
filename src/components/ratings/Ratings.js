@@ -16,7 +16,7 @@ function Ratings({rating,total}) {
     return (
         <div>
              <Typography gutterBottom variant="h6" component="h2">
-                <Rating name="half-rating" defaultValue={rating} precision={0.5} readOnly/>
+                <Rating name="half-rating" value={rating || 0} precision={0.5} readOnly/>
                 <span className={classes.span_ratings}>({total} Ratings)</span>
             </Typography>
         </div>

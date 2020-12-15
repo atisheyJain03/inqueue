@@ -12,6 +12,9 @@ const theme = createMuiTheme({
       fontSize: "1.1rem"
     }
   },
+  link: {
+    textTransform : "none",
+  }
   
 });
 

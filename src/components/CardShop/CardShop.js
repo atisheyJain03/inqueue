@@ -40,27 +40,27 @@ const useStyles = makeStyles({
   
 });
 
-export default function MediaCard() {
+export default function MediaCard({image,name,jobType,totalRatings,description,id,ratingsAverage}) {
   const classes = useStyles();
   const history = useHistory();
   return (
-    <Card className={classes.root} elevation={5} onClick={() => history.push(`/shops/${faker.random.number()}`)}>
+    <Card className={classes.root} elevation={5} onClick={() => history.push(`/shops/${id}/`)}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJlZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60"
+          image={image}
         />
         <CardContent align="left" >
           <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-            {faker.company.companyName()}
+            {name}
           </Typography>
           <Typography gutterBottom variant="h6" component="h2">
-            {faker.name.jobType()}
+            {jobType}
           </Typography>
-          <Ratings rating={4} total={faker.random.number()} />
+          <Ratings rating={ratingsAverage} total={totalRatings} />
           
           <Typography variant="body2" color="textSecondary" component="p"  gutterBottom className={classes.para_info} >
-           {faker.lorem.paragraphs()}
+           {description}
           </Typography>
          
           <Typography gutterBottom variant="overline" component="h1">
