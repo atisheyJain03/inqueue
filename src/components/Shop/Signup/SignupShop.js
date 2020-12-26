@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,9 +11,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import axios from "../../axios";
 import Cookies from "js-cookie";
 import { Link, useHistory } from "react-router-dom";
+import axios from "../../../axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,9 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({ setSnackbar }) {
+export default function SignUpShop({ setSnackbar }) {
   const classes = useStyles();
   const history = useHistory();
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const nameRef = useRef(),
     emailRef = useRef(),
@@ -56,7 +57,7 @@ export default function SignUp({ setSnackbar }) {
     }
     console.log(name, email, password, passwordConfirm);
     axios
-      .post("/users/signup", {
+      .post("/users/signUpShop", {
         data: {
           name,
           email,
@@ -67,12 +68,13 @@ export default function SignUp({ setSnackbar }) {
       .then(() => {
         const obj = {
           type: "success",
-          message: "Logged in Successfully",
+          message: "Account Created Successfully",
           time: Date.now(),
         };
         setSnackbar({ ...obj });
-        history.push("/");
-        window.location.reload();
+        setShowInstructions(true);
+        // history.push("/");
+        // window.location.reload();
       })
       .catch((error) => {
         console.log({ error });
@@ -171,6 +173,18 @@ export default function SignUp({ setSnackbar }) {
                 Already have an account? Sign in
               </Link>
             </Grid>
+            {showInstructions && (
+              <Grid container justify="center">
+                <Grid item>
+                  <h3>Account created successfully</h3>
+                </Grid>
+                <Grid item>
+                  <Link to="/addShopInstructions" variant="body2">
+                    Click here to add Information about shop
+                  </Link>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </form>
       </div>

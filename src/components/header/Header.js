@@ -1,4 +1,6 @@
-import { Button, Grid, Input, makeStyles } from "@material-ui/core";
+// THIS IS A TEMP FILE NOT IN USE RATHER HEADERCUSTOM.JS IS THE HEADER USED IN SITE
+
+import { Button, Grid, Input, makeStyles, Paper } from "@material-ui/core";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import logo from "../../logo.png";
@@ -28,7 +30,7 @@ const useStyle = makeStyles(() => ({
       background: "black",
       opacity: "0.9",
       transform: "translateY(-3px)",
-      borderColor: "#ff751a"
+      borderColor: "#ff751a",
     },
   },
   button__outline: {
@@ -57,25 +59,26 @@ const useStyle = makeStyles(() => ({
 
 function Header() {
   const history = useHistory();
-  console.log(history)
+  console.log(history);
   const classes = useStyle();
   return (
-    <Grid
-      container
-      className="header"
-      justify="space-between"
-      alignItems="center"
-    >
+    <Paper elevation={5}>
       <Grid
-        item
-        xs={2}
-        classes={{
-          item: classes.grid_item,
-        }}
+        container
+        className="header"
+        justify="space-between"
+        alignItems="center"
       >
-        <img src={logo} onClick={() => history.push('/shops')}/>
-      </Grid>
-      {/* <Grid
+        <Grid
+          item
+          xs={2}
+          classes={{
+            item: classes.grid_item,
+          }}
+        >
+          <h1> inQueue </h1>
+        </Grid>
+        {/* <Grid
         item
         xs={7}
         classes={{
@@ -84,52 +87,52 @@ function Header() {
       >
         <form></form>
       </Grid> */}
-      <Grid
-        item
-     
-        classes={{
-          item: classes.grid_item,
-        }}
-      >
-        <div className="header__buttons">
-          <Button
-            onClick={() => history.push('/login')}
-            elevation={5}
-            variant="outlined"
-            color="primary"
-            size="medium"
-            classes={{
-              textPrimary: classes.button__outline,
-              outlinedPrimary: classes.button__outline_primary,
-              root: classes.button__root,
-              outlinedSizeLarge: classes.button__outline,
-            }}
-            style={{
-              marginRight: "20px",
-            }}
-          >
-            login
-          </Button>
+        <Grid
+          item
+          classes={{
+            item: classes.grid_item,
+          }}
+        >
+          <div className="header__buttons">
+            <Button
+              onClick={() => history.push("/login")}
+              elevation={5}
+              variant="outlined"
+              color="primary"
+              size="medium"
+              classes={{
+                textPrimary: classes.button__outline,
+                outlinedPrimary: classes.button__outline_primary,
+                root: classes.button__root,
+                outlinedSizeLarge: classes.button__outline,
+              }}
+              style={{
+                marginRight: "20px",
+              }}
+            >
+              login
+            </Button>
 
-          <Button
-          onClick={() => history.push('/signUp')}
-            elevation={5}
-            variant="outlined"
-            color="primary"
-            size="medium"
-            classes={{
-              textPrimary: classes.button__outline,
-              outlinedPrimary: classes.button__outline_primary,
-              root: classes.button__root,
-              outlinedSizeLarge: classes.button__outline,
-            }}
-            style={{}}
-          >
-            sign up
-          </Button>
-        </div>
+            <Button
+              onClick={() => history.push("/signUp")}
+              elevation={5}
+              variant="outlined"
+              color="primary"
+              size="medium"
+              classes={{
+                textPrimary: classes.button__outline,
+                outlinedPrimary: classes.button__outline_primary,
+                root: classes.button__root,
+                outlinedSizeLarge: classes.button__outline,
+              }}
+              style={{}}
+            >
+              sign up
+            </Button>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   );
 }
 

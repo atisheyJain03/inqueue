@@ -4,10 +4,12 @@ import "./index.css";
 import App from "./App";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "./theme.js";
-
+import { UserProvider } from "./UserContext.js";
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </ThemeProvider>,
   document.getElementById("root")
 );

@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
-import axios from "../../axios";
+import axios from "../../../axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login({ setSnackbar }) {
+export default function LoginShop({ setSnackbar }) {
   const classes = useStyles();
   const passwordRef = useRef(),
     emailRef = useRef();
@@ -65,7 +65,7 @@ export default function Login({ setSnackbar }) {
     }
 
     axios
-      .post("/users/login", {
+      .post("/users/loginShop", {
         data: {
           password,
           email,
@@ -107,6 +107,7 @@ export default function Login({ setSnackbar }) {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
+          <h3>This is for login as admin</h3>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -155,7 +156,7 @@ export default function Login({ setSnackbar }) {
               </Grid>
               <Grid item>
                 <Link to="/signUp" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Want to register a new Shop/services"}
                 </Link>
               </Grid>
             </Grid>
