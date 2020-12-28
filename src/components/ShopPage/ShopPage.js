@@ -64,6 +64,8 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
+var shopId = null;
+
 function ShopPage({ setSnackbar }) {
   const classes = useStyle();
   // pageData =  STORE ALL PAGE DATA WILL GET WHEN PAGE WILL RENDER / COMPONENT WILL MOUNT IN USE EFFECT
@@ -81,11 +83,11 @@ function ShopPage({ setSnackbar }) {
 
     // GET ID OF PAGE WHICH WILL COME IN URL
     // SP THAT WE CAN GET PAGE DATA
-    const id = window.location.pathname.split("/")[2];
+    shopId = window.location.pathname.split("/")[2];
     // IIFE
     (async () => {
       try {
-        const shopRes = await axios.get(`/shops/getShop/${id}`, {
+        const shopRes = await axios.get(`/shops/getShop/${shopId}`, {
           cancelToken: source.token,
         });
         setPageData(shopRes.data.data.shop);
@@ -129,7 +131,7 @@ function ShopPage({ setSnackbar }) {
     <div className={classes.main_div} align="left">
       <Grid container>
         <Grid item xs={12}>
-          <img src={pageData.imageCover} className={classes.shopPage__img} />
+          <img src={pageData.coverPhoto} className={classes.shopPage__img} />
         </Grid>
         <Grid item xs={12} lg={9}>
           <Grid container style={{ marginTop: "1rem" }}>
@@ -223,21 +225,36 @@ function ShopPage({ setSnackbar }) {
                 >
                   OPEN TODAY
                 </Typography>
-                <Typography
+
+                {pageData.openingHours &&
+                  pageData.openingHours.map((time) => {
+                    return (
+                      <Typography
+                        variant="h5"
+                        gutterBottom
+                        component="h2"
+                        className={classes.open_time}
+                      >
+                        {time.open} - {time.close}
+                      </Typography>
+                    );
+                  })}
+
+                {/* <Typography
                   variant="h5"
                   gutterBottom
                   component="h2"
                   className={classes.open_time}
                 >
                   09:00 - 13:00
-                </Typography>
-                <Typography
+                </Typography> */}
+                {/* <Typography
                   variant="h5"
                   component="h2"
                   className={classes.open_time}
                 >
                   14:00 - 18:00
-                </Typography>
+                </Typography> */}
               </div>
             </Grid>
             <Grid item xs={12}>
@@ -288,6 +305,7 @@ function ShopPage({ setSnackbar }) {
                     serviceId={selectOption}
                     setQueueInfo={setQueueInfo}
                     setSnackbar={setSnackbar}
+                    shopId={shopId}
                   />
                 ) : null}
               </div>

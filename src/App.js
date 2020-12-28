@@ -18,6 +18,7 @@ import { UserContext, UserProvider } from "./UserContext";
 import SettingsShop from "./components/Shop/Settings/SettingsShop";
 import LoginShop from "./components/Shop/login/LoginShop";
 import SignUpShop from "./components/Shop/Signup/SignupShop";
+import HeaderShop from "./components/Shop/header/HeaderShop";
 
 function App() {
   const [user, setUser] = useContext(UserContext);
@@ -41,6 +42,17 @@ function App() {
 
         if (userRes.status === 200 && userRes.data.data.user) {
           setUser({ ...userRes.data.data.user });
+          console.log(userRes.data.data.user);
+          if (userRes.data.data.user.shop) {
+            console.log("user");
+            console.log(userRes.data.data.user.shop);
+            socket.emit("join", { id: userRes.data.data.user.shop });
+            // socket.on("notification", (message) => {
+            //   // number++;
+            //   console.log(message);
+            // });
+          }
+
           const obj = {
             type: "success",
             message: `Welcome ${userRes.data.data.user.name}`,
@@ -70,15 +82,25 @@ function App() {
     };
   }, []);
 
+  // socket.on("connect", () => {
+  //   console.log(socket.id);
+  // });
+  // socket.on("5fdb7d6982f61146c026ed9d", (number) => {
+  //   console.log(number);
+  // });
+
   return (
     <div className="App">
-      <SettingsShop />
       <SnackbarCustom snackbar={snackbar} />
+
       {/* <LoginShop /> */}
       <Router>
-        {/* <LoginShop setSnackbar={setSnackbar} /> */}
-        <SignUpShop setSnackbar={setSnackbar} />
-        {/* 
+        <Route exact path="/shopAccount">
+          <HeaderShop />
+          <SettingsShop /> */
+          <LoginShop setSnackbar={setSnackbar} />
+          <SignUpShop setSnackbar={setSnackbar} />
+        </Route>
         <HeaderCustom searchBar={false} />
         <Route exact path="/">
           {null}
@@ -97,7 +119,7 @@ function App() {
         </Route>
         <Route path="/userInfo">
           <User setSnackbar={setSnackbar} />
-        </Route> */}
+        </Route>
       </Router>
     </div>
   );

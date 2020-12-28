@@ -5,9 +5,9 @@ import Loader from "../Loader/Loader";
 
 // THIS IS BUTTON FOR GENERATING TICKET
 // THIS WILL MAKE A REQUEST TO SERVER WHICH WILL GET PLACE IN QUEUE FOR GIVEN SERVICE WITH THE LOGGED IN USER
-function ButtonShopPage({ serviceId, setQueueInfo, setSnackbar }) {
+function ButtonShopPage({ serviceId, setQueueInfo, setSnackbar, shopId }) {
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(shopId);
   const clickHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -16,13 +16,15 @@ function ButtonShopPage({ serviceId, setQueueInfo, setSnackbar }) {
         const ticket = await axios.post("/queue/createQueue", {
           data: {
             serviceId,
+            shopId,
           },
         });
         console.log(ticket.data.data.queue);
         setIsLoading(false);
         const obj = {
           type: "success",
-          message: `Ticket Generated Successfully . Your number is  ${ticket.data.data.queue.number} `,
+          message: `Request For Ticket has been Sent `,
+          time: Date.now(),
         };
         setSnackbar({ ...obj });
       } catch (error) {

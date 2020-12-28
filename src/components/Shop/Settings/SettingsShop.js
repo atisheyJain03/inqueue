@@ -19,6 +19,9 @@ import CardImage from "./CardImage";
 import CoverImage from "./CoverImage";
 import PageInfo from "./PageInfo";
 import PhoneNumber from "./PhoneNumber";
+import ShopName from "./ShopName";
+import ShopType from "./ShopType";
+import Website from "./website";
 
 const useStyles = makeStyles({
   root: {
@@ -176,6 +179,21 @@ function SettingsShop() {
             <Grid container>
               <Grid item xs={12}>
                 <PageInfo setShop={setShop} shopId={shopId} />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <Website setShop={setShop} shopId={shopId} />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <ShopName setShop={setShop} shopId={shopId} />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <ShopType setShop={setShop} shopId={shopId} />
               </Grid>
             </Grid>
             <Grid container>

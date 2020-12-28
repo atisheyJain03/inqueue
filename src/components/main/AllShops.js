@@ -1,8 +1,9 @@
-import { Grid, makeStyles } from "@material-ui/core";
+import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import CardShop from "../CardShop/CardShop";
+import Loader from "../Loader/Loader";
 
 const useStyles = makeStyles((theme) => ({
   grid_container: {
@@ -15,44 +16,63 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // THIS IS THE PAGE WHICH SHOW ALL SHOPS
-
 function AllShops({ setSnackbar }) {
   const classes = useStyles();
   // shops - THIS STORE ALL SHOPS DATA WHICH WILL COME FROM API
   const [shops, setShops] = useState([]);
 
-  // THIS USE EFFECT WILL RUN WHEN PAGE WILL LOAD
-  useEffect(() => {
-    // THIS IS CANCEL TOKEN IN CASE IF COMPONENT UNMOUNT BEFORE GETTING RESPONSE FROM SERVER
-    const source = Axios.CancelToken.source();
+  // to set loader on screen
+  const [loading, setLoading] = useState(true);
 
+  // for pagination
+  const [page, setPage] = useState(1);
+
+  // to check if component is not unmounted
+  //
+  const [isUnmounted, setIsUnmounted] = useState(false);
+  const [noMore, setNoMore] = useState(false);
+  // THIS USE EFFECT WILL RUN WHEN PAGE WILL LOAD
+
+  const getShopsHandler = async () => {
     // IIFE FOR ASYNC REQUEST
-    (async () => {
-      try {
-        const shopRes = await axios.get("/shops/getShops", {
-          cancelToken: source.token,
-        });
-        setShops([...shopRes.data.data.shops]);
-      } catch (error) {
-        console.log({ error });
-        let obj = {
-          type: "error",
-          time: Date.now(),
-        };
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          obj.message = error.response.data.message;
-        } else {
-          obj.message = "Something went wrong Please Reload";
+    setLoading(true);
+    try {
+      const shopRes = await axios.get(`/shops/getShops?limit=6&page=${page}`);
+      console.log(shopRes.data.data.shops);
+      if (!isUnmounted) {
+        if (shopRes.data.data.shops.length === 0) setNoMore(true);
+        else {
+          setShops([...shops, ...shopRes.data.data.shops]);
+          setPage(page + 1);
         }
-        setSnackbar({ ...obj });
+        setLoading(false);
       }
-    })();
+    } catch (error) {
+      console.log({ error });
+      let obj = {
+        type: "error",
+        time: Date.now(),
+      };
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        obj.message = error.response.data.message;
+      } else {
+        obj.message = "Something went wrong Please Reload";
+      }
+      if (!isUnmounted) {
+        setSnackbar({ ...obj });
+        setLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getShopsHandler();
     return () => {
-      source.cancel();
+      setIsUnmounted(true);
     };
   }, []);
   return (
@@ -62,7 +82,7 @@ function AllShops({ setSnackbar }) {
           return (
             <Grid item xs={12} sm={6} lg={4} key={el._id}>
               <CardShop
-                image={el.imageCover}
+                image={el.cardPhoto}
                 name={el.name}
                 jobType={el.shopType}
                 description={el.description}
@@ -74,6 +94,16 @@ function AllShops({ setSnackbar }) {
           );
         })}
       </Grid>
+      {loading ? (
+        <Loader />
+      ) : noMore ? (
+        <Typography variant="h6" gutterBottom>
+          {" "}
+          No more Results
+        </Typography>
+      ) : (
+        <Button onClick={getShopsHandler}>Load more</Button>
+      )}
     </div>
   );
 }
