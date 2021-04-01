@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import BellIcon from "./BellIcon";
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "10%",
   },
   btnReject: {
-    background: "red",
+    background: "#f44336",
     fontSize: 10,
     // fontWeight: "bold",
   },
@@ -50,35 +50,48 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
 
   const [user, setUser] = useContext(UserContext);
 
+  // for pagination
+  const [page, setPage] = useState(1);
+
+  // to check if component is not unmounted
+  //
+  const [isUnmounted, setIsUnmounted] = useState(false);
+  const [noMore, setNoMore] = useState(false);
+  // THIS USE EFFECT WILL RUN WHEN PAGE WILL LOAD
+
   // console.log(user);
   const handleClick = (event) => {
+    console.log(page);
+    setNoMore(false);
     setAnchorEl(event.currentTarget);
     setTotalNotifications(0);
     handleClickNotification();
   };
+
+  useEffect(() => {
+    return () => {
+      setIsUnmounted(true);
+    };
+  }, []);
+
   const handleClickNotification = () => {
     // console.log("...............");
     setLoading(true);
     axios
-      .get(`/shops/waitingQueue/${user.shop}`)
+      .get(`/shops/waitingQueue/${user.shop}?page=${page}&limit=10`)
       .then((res) => {
-        console.log(res.data.data.queue.waitingQueue);
-        setList([...res.data.data.queue.waitingQueue]);
-        setLoading(false);
+        if (!isUnmounted) {
+          console.log(res.data.data.queue.waitingQueue);
+          if (res.data.data.queue.waitingQueue.length === 0) setNoMore(true);
+          else {
+            setList([...list, ...res.data.data.queue.waitingQueue]);
+            setPage(page + 1);
+          }
+          setLoading(false);
+        }
       })
       .catch((err) => console.log(err));
   };
-
-  // useEffect(() => {
-  //   console.log("entered");
-  //   socket.on("notification", () =>
-  //     setTotalNotifications(totalNotifications + 1)
-  //   );
-  //   return () => {
-  //     console.log("exited");
-  //     socket.off("notification");
-  //   };
-  // });
 
   const handleDecide = (queueId, serviceId, type, index) => {
     // console.log(index);
@@ -103,12 +116,14 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
   const open = Boolean(anchorEl);
 
   const handleClose = () => {
+    setPage(1);
+    setList([]);
     setAnchorEl(null);
   };
 
   return (
     <div style={{ alignSelf: "center" }}>
-      <div onClick={handleClick}>
+      <div onClick={handleClick} style={{ position: "relative" }}>
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
@@ -122,90 +137,95 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
         </IconButton>
         <p style={{ display: "inline-block" }}>{textAfterNotificationIcon}</p>
       </div>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: "50ch",
-            },
-          }}
-        >
-          {" "}
-          {list.length ? (
-            list.map((listItem, index) => (
-              <ListItem
-                key={listItem.id}
-                className={classes.listItem}
-                style={{ display: "block" }}
-              >
-                <Typography variant="h5">{listItem.service.name}</Typography>
-                <Typography variant="h6">
-                  {" "}
-                  A new Request for Ticket By {listItem.user.name}{" "}
-                </Typography>
-                {!listItem.status ? (
-                  <div>
-                    <Button
-                      variant="contained"
-                      className={classes.btnAccept}
-                      onClick={() =>
-                        handleDecide(
-                          listItem.id,
-                          listItem.service.id,
-                          "accepted",
-                          index
-                        )
-                      }
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      variant="contained"
-                      className={classes.btnReject}
-                      onClick={() =>
-                        handleDecide(
-                          listItem.id,
-                          listItem.service.id,
-                          "rejected",
-                          index
-                        )
-                      }
-                    >
-                      Reject
-                    </Button>
-                  </div>
-                ) : (
-                  <Typography
-                    variant="caption"
-                    align="right"
-                    display="block"
-                    style={{
-                      color: listItem.status === "accepted" ? "#4caf50" : "red",
-                    }}
-                  >
-                    {listItem.status}
-                  </Typography>
-                )}
-                <Typography variant="caption" align="right" display="block">
-                  {momentTimezone(listItem.updatedAt)}
-                </Typography>
-              </ListItem>
-            ))
-          ) : (
-            <Typography variant="h6" gutterBottom align="center">
-              No pending Request
+
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: "100vh",
+            maxWidth: "90vw",
+            width: "50ch",
+          },
+        }}
+      >
+        {list.map((listItem, index) => (
+          <ListItem
+            key={listItem.id}
+            className={classes.listItem}
+            style={{ display: "block" }}
+          >
+            <Typography variant="h5">{listItem.service.name}</Typography>
+            <Typography variant="h6">
+              {" "}
+              A new Request for Ticket By {listItem.user.name}{" "}
             </Typography>
+            {!listItem.status ? (
+              <div>
+                <Button
+                  variant="contained"
+                  className={classes.btnAccept}
+                  onClick={() =>
+                    handleDecide(
+                      listItem.id,
+                      listItem.service.id,
+                      "accepted",
+                      index
+                    )
+                  }
+                >
+                  Accept
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.btnReject}
+                  onClick={() =>
+                    handleDecide(
+                      listItem.id,
+                      listItem.service.id,
+                      "rejected",
+                      index
+                    )
+                  }
+                >
+                  Reject
+                </Button>
+              </div>
+            ) : (
+              <Typography
+                variant="caption"
+                align="right"
+                display="block"
+                style={{
+                  color: listItem.status === "accepted" ? "#4caf50" : "#f44336",
+                }}
+              >
+                {listItem.status}
+              </Typography>
+            )}
+            <Typography variant="caption" align="right" display="block">
+              {momentTimezone(listItem.updatedAt)}
+            </Typography>
+          </ListItem>
+        ))}
+        <ListItem
+          key="button-list"
+          className={classes.listItem}
+          style={{ display: "block" }}
+        >
+          {loading ? (
+            <Loader />
+          ) : noMore ? (
+            <Typography variant="h6" gutterBottom>
+              No more Results
+            </Typography>
+          ) : (
+            <Button onClick={handleClickNotification}>Load more</Button>
           )}
-        </Menu>
-      )}
+        </ListItem>
+      </Menu>
     </div>
   );
 }

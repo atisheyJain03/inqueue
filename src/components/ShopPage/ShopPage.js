@@ -10,7 +10,7 @@ import Ratings from "../ratings/Ratings";
 import axios from "../../axios";
 import ButtonShopPage from "./ButtonShopPage";
 import Axios from "axios";
-import { showSnackbar } from "../snackbar/Snackbar";
+import Loader from "../Loader/Loader";
 
 const useStyle = makeStyles((theme) => ({
   main_div: {
@@ -77,6 +77,9 @@ function ShopPage({ setSnackbar }) {
   // THIS IS SELECT OPTION IN DROP DOWN THIS WILL STORE ID OF THE SERVICE SELLECTED
   const [selectOption, setSelectOption] = useState("");
 
+  // to set loader on screen
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     // THIS IS CANCEL TOKEN IN CASE IF COMPONENT UNMOUNT BEFORE GETTING RESPONSE FROM SERVER
     const source = Axios.CancelToken.source();
@@ -91,6 +94,7 @@ function ShopPage({ setSnackbar }) {
           cancelToken: source.token,
         });
         setPageData(shopRes.data.data.shop);
+        setLoading(false);
       } catch (error) {
         let obj = {
           type: "error",
@@ -106,6 +110,7 @@ function ShopPage({ setSnackbar }) {
           obj.message = "Something went wrong Please Reload";
         }
         setSnackbar({ ...obj });
+        setLoading(false);
       }
     })();
     return () => {
@@ -128,192 +133,186 @@ function ShopPage({ setSnackbar }) {
     }
   };
   return (
-    <div className={classes.main_div} align="left">
-      <Grid container>
-        <Grid item xs={12}>
-          <img src={pageData.coverPhoto} className={classes.shopPage__img} />
-        </Grid>
-        <Grid item xs={12} lg={9}>
-          <Grid container style={{ marginTop: "1rem" }}>
-            <Grid item xs={12} sm={9}>
-              <div className={classes.heading__div} align="left">
-                <Typography
-                  variant="h4"
-                  component="h2"
-                  className={classes.heading}
-                >
-                  {pageData.name}
-                </Typography>
-                <Typography gutterBottom variant="h6" component="h2">
-                  {pageData.shopType}
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item sm={3} xs={12}>
-              <Ratings
-                rating={pageData.ratingsAverage}
-                total={pageData.ratingsQuantity}
-              />
-            </Grid>
-          </Grid>
-          <Grid container justify="space-between">
-            <Grid item sm={4} xs={12}>
-              <div className={classes.contact}>
-                <Typography
-                  variant="overline"
-                  component="h2"
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "700",
-                    marginBottom: "0.6rem",
-                  }}
-                >
-                  contact
-                </Typography>
-                <Typography variant="overline" component="h2">
-                  {pageData.address}
-                </Typography>
-                <Typography variant="overline" component="h2">
-                  karnal - 13200
-                </Typography>
-                <Typography variant="overline" component="h2">
-                  Haryana
-                </Typography>
-                <div style={{ marginTop: "0.5rem" }}>
-                  <Typography variant="overline" component="h2">
-                    tel : {pageData.phoneNumber}
-                  </Typography>
-                </div>
-              </div>
-            </Grid>
-            <Grid item sm={8} xs={12}>
-              <div className={classes.info}>
-                <Typography
-                  variant="overline"
-                  component="h2"
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "700",
-                    marginBottom: "0.6rem",
-                    lineHeight: "1.5",
-                  }}
-                >
-                  info
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  gutterBottom
-                  className={classes.para_info}
-                  align="justify"
-                >
-                  {pageData.info}
-                </Typography>
-              </div>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} lg={3}>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={classes.main_div} align="left">
           <Grid container>
             <Grid item xs={12}>
-              <div align="left">
-                <Typography
-                  variant="overline"
-                  component="h1"
-                  style={{ fontWeight: "700" }}
-                >
-                  OPEN TODAY
-                </Typography>
-
-                {pageData.openingHours &&
-                  pageData.openingHours.map((time) => {
-                    return (
-                      <Typography
-                        variant="h5"
-                        gutterBottom
-                        component="h2"
-                        className={classes.open_time}
-                      >
-                        {time.open} - {time.close}
-                      </Typography>
-                    );
-                  })}
-
-                {/* <Typography
-                  variant="h5"
-                  gutterBottom
-                  component="h2"
-                  className={classes.open_time}
-                >
-                  09:00 - 13:00
-                </Typography> */}
-                {/* <Typography
-                  variant="h5"
-                  component="h2"
-                  className={classes.open_time}
-                >
-                  14:00 - 18:00
-                </Typography> */}
-              </div>
+              <img
+                src={pageData.coverPhoto}
+                className={classes.shopPage__img}
+              />
             </Grid>
-            <Grid item xs={12}>
-              {selectOption ? (
-                <div className={classes.waiting__time}>
-                  <Typography variant="overline" component="h2">
-                    Estimate waiting time - 20 min
-                  </Typography>
-                  <Typography variant="overline" component="h2">
-                    Current number - {queueInfo.currentNumber}
-                  </Typography>
-                  <Typography variant="overline" component="h2">
-                    Total numbers - {queueInfo.totalNumber}
-                  </Typography>
-                </div>
-              ) : null}
-              <div
-                style={{ marginTop: "2rem", marginLeft: "auto" }}
-                className={classes.dropdownRoot}
-              >
-                {/* DROPDOWN REFRENCES VIDEO */
-                /* https://www.youtube.com/watch?v=FTVL36d1gXY&t=351s&ab_channel=phpstepbystep */}
-                <Select
-                  value={selectOption}
-                  displayEmpty
-                  autoWidth
-                  onChange={dropdownOnChange}
-                >
-                  <MenuItem key={"empty"} disabled value="">
-                    Select An Option
-                  </MenuItem>
-                  ({" "}
-                  {pageData.serviceBy
-                    ? pageData.serviceBy.map((service) => {
-                        return (
-                          <MenuItem key={service.id} value={service.id}>
-                            {service.name}
-                          </MenuItem>
-                        );
-                      })
-                    : null}{" "}
-                  )
-                </Select>
-              </div>
-              <div style={{ marginTop: "2rem" }}>
-                {selectOption ? (
-                  <ButtonShopPage
-                    serviceId={selectOption}
-                    setQueueInfo={setQueueInfo}
-                    setSnackbar={setSnackbar}
-                    shopId={shopId}
+            <Grid item xs={12} lg={9}>
+              <Grid container style={{ marginTop: "1rem" }}>
+                <Grid item xs={12} sm={9}>
+                  <div className={classes.heading__div} align="left">
+                    <Typography
+                      variant="h4"
+                      component="h2"
+                      className={classes.heading}
+                    >
+                      {pageData.name}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="h2">
+                      {pageData.shopType}
+                    </Typography>
+                  </div>
+                </Grid>
+                <Grid item sm={3} xs={12}>
+                  <Ratings
+                    rating={pageData.ratingsAverage}
+                    total={pageData.ratingsQuantity}
                   />
-                ) : null}
-              </div>
+                </Grid>
+              </Grid>
+              <Grid container justify="space-between">
+                <Grid item sm={4} xs={12}>
+                  <div className={classes.contact}>
+                    <Typography
+                      variant="overline"
+                      component="h2"
+                      style={{
+                        fontSize: "0.9rem",
+                        fontWeight: "700",
+                        marginBottom: "0.6rem",
+                      }}
+                    >
+                      contact
+                    </Typography>
+                    <Typography variant="overline" component="h2">
+                      {pageData.address}
+                    </Typography>
+                    <Typography variant="overline" component="h2">
+                      karnal - 13200
+                    </Typography>
+                    <Typography variant="overline" component="h2">
+                      Haryana
+                    </Typography>
+                    <div style={{ marginTop: "0.5rem" }}>
+                      <Typography variant="overline" component="h2">
+                        tel : {pageData.phoneNumber}
+                      </Typography>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item sm={8} xs={12}>
+                  <div className={classes.info}>
+                    <Typography
+                      variant="overline"
+                      component="h2"
+                      style={{
+                        fontSize: "0.9rem",
+                        fontWeight: "700",
+                        marginBottom: "0.6rem",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      info
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      gutterBottom
+                      className={classes.para_info}
+                      align="justify"
+                    >
+                      {pageData.info}
+                    </Typography>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <div align="left">
+                    <Typography
+                      variant="overline"
+                      component="h1"
+                      style={{ fontWeight: "700" }}
+                    >
+                      OPEN TODAY
+                    </Typography>
+
+                    {pageData.openingHours &&
+                      pageData.openingHours.map((time) => {
+                        return (
+                          <Typography
+                            variant="h5"
+                            gutterBottom
+                            component="h2"
+                            className={classes.open_time}
+                            key={time.id}
+                          >
+                            {time.open} - {time.close}
+                          </Typography>
+                        );
+                      })}
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  {selectOption ? (
+                    <div className={classes.waiting__time}>
+                      <Typography variant="overline" component="h2">
+                        Estimate waiting time - 20 min
+                      </Typography>
+                      <Typography variant="overline" component="h2">
+                        Current number - {queueInfo.currentNumber}
+                      </Typography>
+                      <Typography variant="overline" component="h2">
+                        Total numbers - {queueInfo.totalNumber}
+                      </Typography>
+                    </div>
+                  ) : null}
+                  <div
+                    style={{ marginTop: "2rem", marginLeft: "auto" }}
+                    className={classes.dropdownRoot}
+                  >
+                    {/* DROPDOWN REFRENCES VIDEO */
+                    /* https://www.youtube.com/watch?v=FTVL36d1gXY&t=351s&ab_channel=phpstepbystep */}
+                    <Select
+                      value={selectOption}
+                      displayEmpty
+                      autoWidth
+                      onChange={dropdownOnChange}
+                    >
+                      <MenuItem key={"empty"} disabled value="">
+                        Select An Option
+                      </MenuItem>
+                      ({" "}
+                      {pageData.serviceBy
+                        ? pageData.serviceBy.map((service) => {
+                            return (
+                              <MenuItem key={service.id} value={service.id}>
+                                {service.name}
+                              </MenuItem>
+                            );
+                          })
+                        : null}{" "}
+                      )
+                    </Select>
+                  </div>
+                  <div style={{ marginTop: "2rem" }}>
+                    {selectOption ? (
+                      <ButtonShopPage
+                        serviceId={selectOption}
+                        setQueueInfo={setQueueInfo}
+                        setSnackbar={setSnackbar}
+                        shopId={shopId}
+                      />
+                    ) : null}
+                  </div>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 

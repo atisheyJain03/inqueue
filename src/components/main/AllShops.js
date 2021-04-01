@@ -1,5 +1,4 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import CardShop from "../CardShop/CardShop";

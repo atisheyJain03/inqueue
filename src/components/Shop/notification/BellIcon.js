@@ -21,14 +21,12 @@ export default function BellIcon({
 }) {
   useEffect(() => {
     console.log("entered");
-    socket.on("notification", () =>
-      setTotalNotifications(totalNotifications + 1)
-    );
+    socket.on("shop", () => setTotalNotifications(totalNotifications + 1));
     return () => {
       console.log("exited");
-      socket.off("notification");
+      socket.off("shop");
     };
-  });
+  }, []);
 
   return (
     // <IconButton aria-label="bell">

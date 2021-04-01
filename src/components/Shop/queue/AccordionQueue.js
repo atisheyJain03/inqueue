@@ -6,7 +6,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Button, Grid } from "@material-ui/core";
-import momentTimezone from "../../../../momentTimezone";
+import momentTimezone from "../../../momentTimezone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AccordionCustom({ ticket }) {
+export default function AccordionQueue({ ticket }) {
   const classes = useStyles();
 
   return (
@@ -44,47 +44,39 @@ export default function AccordionCustom({ ticket }) {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            {ticket.shop.name}
+            {ticket.user ? ticket.user.name : ticket.userName}
             <span style={{ color: "#c0c0c0" }}> | </span>
-            {ticket.service.name}
+            {ticket.number}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Grid container alignContent="center" style={{ marginBottom: "0px" }}>
             <Grid container justify="space-between">
               <Grid item xs={3} className={classes.grid_left}>
-                Current Number
+                Number
               </Grid>
               <Grid item xs={8}>
-                {ticket.service.currentNumber}
-              </Grid>
-            </Grid>
-            <Grid container justify="space-between">
-              <Grid item xs={3} className={classes.grid_left}>
-                My Number
-              </Grid>
-              <Grid item xs={8} className={classes.grid_left}>
                 {ticket.number}
               </Grid>
             </Grid>
-
             <Grid container justify="space-between">
               <Grid item xs={3} className={classes.grid_left}>
-                Status
+                User Name
               </Grid>
-              <Grid item xs={8}>
-                {ticket.status}
+              <Grid item xs={8} className={classes.grid_left}>
+                {ticket.user ? ticket.user.name : ticket.userName}
               </Grid>
             </Grid>
 
             <Grid container justify="space-between">
               <Grid item xs={3} className={classes.grid_left}>
-                Estimated wait time
+                User Email
               </Grid>
               <Grid item xs={8}>
-                5 min
+                {ticket.user && ticket.user.email}
               </Grid>
             </Grid>
+
             <Grid container justify="space-between">
               <Grid item xs={3} className={classes.grid_left}>
                 Description

@@ -22,6 +22,7 @@ import Axios from "axios";
 import { UserContext } from "../../../UserContext";
 import UserAvatar from "../../Avatar/UserAvatar";
 import NotificationShop from "../notification/NotificationShop";
+import TicketGenerate from "../TicketGenerate/TicketGenerate";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -165,7 +166,7 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
             onClick={() => {
               handleMobileMenuClose();
               console.log("queue");
-              //   history.push("/userInfo");
+              history.push("/shopQueue");
             }}
           >
             {/* <IconButton>
@@ -236,20 +237,15 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
                   onClick={() => {
                     handleMobileMenuClose();
                     console.log("queue");
-                    //   history.push("/userInfo");
+                    history.push("/shopQueue");
                   }}
                 >
                   Queue
                 </Button>
-                <Button
-                  onClick={() => {
-                    handleMobileMenuClose();
-                    console.log("my shop");
-                    //   history.push("/shops");
-                  }}
-                >
-                  My Shop
-                </Button>
+                <div style={{ alignSelf: "center", margin: "10px 20px" }}>
+                  <TicketGenerate />
+                </div>
+
                 <Button
                   onClick={() => {
                     handleMobileMenuClose();

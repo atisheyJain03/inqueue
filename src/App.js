@@ -11,7 +11,6 @@ import User from "./components/user/User";
 import HeaderCustom from "./components/header/HeaderCustom";
 import { socket } from "./socket";
 import SnackbarCustom from "./components/snackbar/Snackbar";
-import DrawerNew from "./components/user/DrawerNew.js";
 import axios from "./axios";
 import Axios from "axios";
 import { UserContext, UserProvider } from "./UserContext";
@@ -19,6 +18,7 @@ import SettingsShop from "./components/Shop/Settings/SettingsShop";
 import LoginShop from "./components/Shop/login/LoginShop";
 import SignUpShop from "./components/Shop/Signup/SignupShop";
 import HeaderShop from "./components/Shop/header/HeaderShop";
+import Queue from "./components/Shop/queue/Queue";
 
 function App() {
   const [user, setUser] = useContext(UserContext);
@@ -42,17 +42,15 @@ function App() {
 
         if (userRes.status === 200 && userRes.data.data.user) {
           setUser({ ...userRes.data.data.user });
-          console.log(userRes.data.data.user);
+          console.log({ ...userRes.data.data.user });
           if (userRes.data.data.user.shop) {
-            console.log("user");
             console.log(userRes.data.data.user.shop);
-            socket.emit("join", { id: userRes.data.data.user.shop });
-            // socket.on("notification", (message) => {
-            //   // number++;
-            //   console.log(message);
-            // });
+            socket.emit("join", { idShop: userRes.data.data.user.shop });
+          } else if (userRes.data.data.user.role === "user") {
+            console.log(userRes.data.data.user.id);
+            socket.emit("join", { idUser: userRes.data.data.user.id });
+            // socket.on("user", () => alert("user res"));
           }
-
           const obj = {
             type: "success",
             message: `Welcome ${userRes.data.data.user.name}`,
@@ -92,14 +90,15 @@ function App() {
   return (
     <div className="App">
       <SnackbarCustom snackbar={snackbar} />
-
-      {/* <LoginShop /> */}
       <Router>
         <Route exact path="/shopAccount">
           <HeaderShop />
-          <SettingsShop /> */
+          <SettingsShop />
           <LoginShop setSnackbar={setSnackbar} />
           <SignUpShop setSnackbar={setSnackbar} />
+        </Route>
+        <Route exact path="/shopQueue">
+          <Queue />
         </Route>
         <HeaderCustom searchBar={false} />
         <Route exact path="/">
