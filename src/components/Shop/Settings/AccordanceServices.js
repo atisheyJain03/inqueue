@@ -24,7 +24,7 @@ export default function AccordanceServices({ services, setServices }) {
   // const [showService, setShowService] = useState([...services]);
 
   const handleChangeSwitch = (id, status, index) => {
-    console.log(id, status);
+    // console.log(id, status);
     axios
       .patch(`/service/updateService/${id}`, {
         data: {
@@ -32,10 +32,10 @@ export default function AccordanceServices({ services, setServices }) {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const newShowService = [...services];
         newShowService[index].isAvailable = !status;
-        console.log(newShowService[index]);
+        // console.log(newShowService[index]);
         setServices([...newShowService]);
       })
       .catch((err) => console.log(err));
@@ -45,7 +45,7 @@ export default function AccordanceServices({ services, setServices }) {
     axios
       .delete(`/service/deleteService/${id}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const newShowService = [...services];
         newShowService.splice(index, 1);
 

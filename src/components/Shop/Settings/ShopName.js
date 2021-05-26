@@ -20,7 +20,7 @@ function ShopName({ shopId, setShop }) {
       })
       .then((res) => {
         inputRef.current.value = "";
-        console.log(res);
+        // console.log(res);
         setShop(res.data.data.shop);
       })
       .catch((err) => console.log(err));

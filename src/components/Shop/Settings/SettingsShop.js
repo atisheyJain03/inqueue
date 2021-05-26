@@ -54,14 +54,14 @@ function SettingsShop() {
   const [time, setTime] = useState([]);
   const [cardImage, setCardImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
-  console.log(time);
+  // console.log(time);
 
-  console.log(shopId);
+  // console.log(shopId);
   useEffect(() => {
     axios
       .get("/shops/getShopByAdmin")
       .then((res) => {
-        console.log(res.data.data.shop);
+        // console.log(res.data.data.shop);
         setShop(res.data.data.shop);
         setServices(res.data.data.shop.serviceBy);
         setTime(res.data.data.shop.openingHours);
@@ -70,7 +70,7 @@ function SettingsShop() {
         shopId = res.data.data.shop._id;
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log({ err }));
   }, []);
 
   return (
@@ -80,31 +80,7 @@ function SettingsShop() {
       ) : (
         <div className={classes.root}>
           <Grid container>
-            <Grid container justify="space-between">
-              <Grid item xs={2}>
-                Shop
-              </Grid>
-              <Grid item xs={7}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      onChange={() => setShopStatus(!shopStatus)}
-                      name="gilad"
-                    />
-                  }
-                  label={shopStatus ? "open" : "closed"}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Typography
-                  variant="h5"
-                  color="primary"
-                  className={classes.shop}
-                >
-                  {shopStatus ? "open" : "closed"}
-                </Typography>
-              </Grid>
-            </Grid>
+            <Grid container justify="space-between"></Grid>
             <Grid container justify="space-between">
               <Grid item xs={12} sm={9}>
                 <AccordionTiming

@@ -19,35 +19,39 @@ import LoginShop from "./components/Shop/login/LoginShop";
 import SignUpShop from "./components/Shop/Signup/SignupShop";
 import HeaderShop from "./components/Shop/header/HeaderShop";
 import Queue from "./components/Shop/queue/Queue";
+import Homepage from "./components/header/Homepage/Homepage";
+import Cookies from "js-cookie";
 
 function App() {
   const [user, setUser] = useContext(UserContext);
+  // console.log(user);
   const [snackbar, setSnackbar] = useState({
     type: "",
     message: "",
     time: null,
   });
-  console.log("app.js");
+  // console.log("app.js");
   useEffect(() => {
-    console.log("header useEffect");
+    // console.log("header useEffect");
     // THIS IS CANCEL TOKEN IN CASE IF COMPONENT UNMOUNT BEFORE GETTING RESPONSE FROM SERVER
     const source = Axios.CancelToken.source();
 
     // IIFE FOR ASYNC REQUEST
     (async () => {
       try {
-        const userRes = await axios.get("/users/me", {
+        const userRes = await axios.get(`/users/me/${Cookies.get("jwt")}`, {
           cancelToken: source.token,
         });
+        // console.log("🚀 ~ file: App.js ~ line 44 ~ userRes", userRes);
 
         if (userRes.status === 200 && userRes.data.data.user) {
           setUser({ ...userRes.data.data.user });
-          console.log({ ...userRes.data.data.user });
+          // console.log({ ...userRes.data.data.user });
           if (userRes.data.data.user.shop) {
-            console.log(userRes.data.data.user.shop);
+            // console.log(userRes.data.data.user.shop);
             socket.emit("join", { idShop: userRes.data.data.user.shop });
           } else if (userRes.data.data.user.role === "user") {
-            console.log(userRes.data.data.user.id);
+            // console.log(userRes.data.data.user.id);
             socket.emit("join", { idUser: userRes.data.data.user.id });
             // socket.on("user", () => alert("user res"));
           }
@@ -90,19 +94,32 @@ function App() {
   return (
     <div className="App">
       <SnackbarCustom snackbar={snackbar} />
+
       <Router>
-        <Route exact path="/shopAccount">
-          <HeaderShop />
-          <SettingsShop />
+        <HeaderCustom searchBar={false} />
+        <Route path="/shopAccount">{user ? <HeaderShop /> : null}</Route>
+        <Route exact path="/shopAccount/loginShop">
           <LoginShop setSnackbar={setSnackbar} />
+        </Route>
+        <Route exact path="/shopAccount/signupShop">
           <SignUpShop setSnackbar={setSnackbar} />
         </Route>
-        <Route exact path="/shopQueue">
+        <Route exact path="/shopAccount/shopQueue">
           <Queue />
         </Route>
-        <HeaderCustom searchBar={false} />
+        <Route exact path="/shopAccount/settingsShop">
+          <SettingsShop />
+        </Route>
+
         <Route exact path="/">
-          {null}
+          {!user || user.role != "admin" ? (
+            <Homepage />
+          ) : (
+            <>
+              <HeaderShop />
+              <SettingsShop />
+            </>
+          )}
         </Route>
         <Route exact path="/shops">
           <Allshops setSnackbar={setSnackbar} />

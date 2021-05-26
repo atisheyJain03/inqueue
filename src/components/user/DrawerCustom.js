@@ -117,7 +117,7 @@ export default function DrawerCustom({ children, setSelected, setSnackbar }) {
     if (text === "Logout") {
       LogoutFunction(setSnackbar);
     }
-    console.log(text);
+    // console.log(text);
     setSelected(text);
   };
 
@@ -126,7 +126,6 @@ export default function DrawerCustom({ children, setSelected, setSnackbar }) {
       <CssBaseline />
       <AppBar
         position="fixed"
-        // elevation={2}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

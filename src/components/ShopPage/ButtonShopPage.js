@@ -7,7 +7,7 @@ import Loader from "../Loader/Loader";
 // THIS WILL MAKE A REQUEST TO SERVER WHICH WILL GET PLACE IN QUEUE FOR GIVEN SERVICE WITH THE LOGGED IN USER
 function ButtonShopPage({ serviceId, setQueueInfo, setSnackbar, shopId }) {
   const [isLoading, setIsLoading] = useState(false);
-  console.log(shopId);
+  // console.log(shopId);
   const clickHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -19,7 +19,7 @@ function ButtonShopPage({ serviceId, setQueueInfo, setSnackbar, shopId }) {
             shopId,
           },
         });
-        console.log(ticket.data.data.queue);
+        // console.log(ticket.data.data.queue);
         setIsLoading(false);
         const obj = {
           type: "success",

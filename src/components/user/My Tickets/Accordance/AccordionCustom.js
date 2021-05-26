@@ -44,9 +44,9 @@ export default function AccordionCustom({ ticket }) {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            {ticket.shop.name}
+            {ticket && ticket.shop && ticket.shop.name}
             <span style={{ color: "#c0c0c0" }}> | </span>
-            {ticket.service.name}
+            {ticket && ticket.service && ticket.service.name}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -56,7 +56,7 @@ export default function AccordionCustom({ ticket }) {
                 Current Number
               </Grid>
               <Grid item xs={8}>
-                {ticket.service.currentNumber}
+                {ticket && ticket.service && ticket.service.currentNumber}
               </Grid>
             </Grid>
             <Grid container justify="space-between">
@@ -64,7 +64,7 @@ export default function AccordionCustom({ ticket }) {
                 My Number
               </Grid>
               <Grid item xs={8} className={classes.grid_left}>
-                {ticket.number}
+                {ticket && ticket.number}
               </Grid>
             </Grid>
 
@@ -73,7 +73,7 @@ export default function AccordionCustom({ ticket }) {
                 Status
               </Grid>
               <Grid item xs={8}>
-                {ticket.status}
+                {ticket && ticket.status}
               </Grid>
             </Grid>
 
@@ -110,7 +110,7 @@ export default function AccordionCustom({ ticket }) {
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="caption" align="right" display="block">
-                  {momentTimezone(ticket.updatedAt)}
+                  {ticket && momentTimezone(ticket.updatedAt)}
                 </Typography>
               </Grid>
             </Grid>

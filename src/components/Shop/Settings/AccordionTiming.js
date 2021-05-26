@@ -32,7 +32,7 @@ export default function AccordionTiming({ time, setTime, shopId }) {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setTime([...newTime]);
       })
       .catch((err) => console.log(err));

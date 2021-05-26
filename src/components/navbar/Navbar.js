@@ -66,7 +66,11 @@ function Navbar() {
         backgroundPosition: "center",
       }}
     >
-      <img src={logo} className="navbar__image" onClick={() => history.push('/shops')}></img>
+      <img
+        src={logo}
+        className="navbar__image"
+        onClick={() => history.push("/shops")}
+      ></img>
       <div className="navbar__buttons">
         <Button
           elevation={5}

@@ -51,10 +51,10 @@ export default function SignUp({ setSnackbar }) {
     const password = passwordRef.current.value;
     const passwordConfirm = passwordConfirmRef.current.value;
     if (!name || !email || !password || !passwordConfirm) {
-      console.log("something is missing");
+      // console.log("something is missing");
       return;
     }
-    console.log(name, email, password, passwordConfirm);
+    // console.log(name, email, password, passwordConfirm);
     axios
       .post("/users/signup", {
         data: {
@@ -64,18 +64,21 @@ export default function SignUp({ setSnackbar }) {
           passwordConfirm,
         },
       })
-      .then(() => {
+      .then((res) => {
         const obj = {
           type: "success",
           message: "Logged in Successfully",
           time: Date.now(),
         };
+        Cookies.set("jwt", res.data.token, {
+          expires: 90,
+        });
         setSnackbar({ ...obj });
         history.push("/");
         window.location.reload();
       })
       .catch((error) => {
-        console.log({ error });
+        // console.log({ error });
         let obj = {
           type: "error",
           time: Date.now(),

@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
       height: "2.0rem",
     },
   },
+  btnPartner: {},
 }));
 
 export default function HeaderCustom({ setSnackbar, searchBar }) {
@@ -103,12 +104,10 @@ export default function HeaderCustom({ setSnackbar, searchBar }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  console.log("header");
+  // console.log("header");
   const [user, setUser] = useContext(UserContext);
+  // console.log(user);
 
-  console.log(user);
-
-  console.log(user);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -173,7 +172,7 @@ export default function HeaderCustom({ setSnackbar, searchBar }) {
       ) : (
         <MenuItem
           onClick={() => {
-            console.log("login");
+            // console.log("login");
             history.push("/login");
             handleMobileMenuClose();
           }}
@@ -243,7 +242,16 @@ export default function HeaderCustom({ setSnackbar, searchBar }) {
                 </IconButton>
               </>
             ) : (
-              <Button onClick={() => history.push("/login")}>Login</Button>
+              <>
+                <Button onClick={() => history.push("/login")}>Login</Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => history.push("/shopAccount/loginShop")}
+                >
+                  Become A Partner
+                </Button>
+              </>
             )}
           </div>
           <div className={classes.sectionMobile}>

@@ -5,7 +5,7 @@ import axios from "../../../axios";
 function AddTiming({ time, setTime, shopId }) {
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
-  console.log(time);
+  // console.log(time);
   const handleClick = () => {
     const startTime = startTimeRef.current.value.trim();
     const endTime = endTimeRef.current.value.trim();

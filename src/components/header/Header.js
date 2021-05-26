@@ -59,7 +59,7 @@ const useStyle = makeStyles(() => ({
 
 function Header() {
   const history = useHistory();
-  console.log(history);
+  // console.log(history);
   const classes = useStyle();
   return (
     <Paper elevation={5}>
@@ -78,15 +78,7 @@ function Header() {
         >
           <h1> inQueue </h1>
         </Grid>
-        {/* <Grid
-        item
-        xs={7}
-        classes={{
-          item: classes.grid_item,
-        }}
-      >
-        <form></form>
-      </Grid> */}
+
         <Grid
           item
           classes={{

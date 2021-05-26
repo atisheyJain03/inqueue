@@ -35,6 +35,7 @@ function Queue() {
   useEffect(() => {
     const source = Axios.CancelToken.source();
     cancelToken = source;
+
     axios
       .get(`/shops/services/${user.shop}`, {
         cancelToken: source.token,
@@ -67,7 +68,7 @@ function Queue() {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log({ ...res.data.data.queue.queue });
+        // console.log({ ...res.data.data.queue.queue });
         setCurrentNumber(res.data.data.queue.currentNumber);
         setTotalNumber(res.data.data.queue.totalNumber);
         if (res.data.data.queue.queue.length === 0) setNoMore(true);
@@ -105,9 +106,9 @@ function Queue() {
       .catch((err) => console.log(err));
   };
 
-  console.log(queue);
-  console.log(shopServices);
-  console.log(selectOption);
+  // console.log(queue);
+  // console.log(shopServices);
+  // console.log(selectOption);
   return (
     <div>
       <div>

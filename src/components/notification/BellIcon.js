@@ -20,23 +20,21 @@ export default function BellIcon({
   setTotalNotifications,
 }) {
   useEffect(() => {
-    console.log("entered");
+    // console.log("entered");
     socket.on(
       "notification",
       () => setTotalNotifications(totalNotifications + 1)
       // setTotalNotifications(totalNotifications + 1)
     );
     return () => {
-      console.log("exited");
+      // console.log("exited");
       // socket.off("notificationUser");
     };
   }, []);
 
   return (
-    // <IconButton aria-label="bell">
     <StyledBadge badgeContent={totalNotifications} color="secondary">
       <NotificationsActiveTwoToneIcon />
     </StyledBadge>
-    // </IconButton>
   );
 }

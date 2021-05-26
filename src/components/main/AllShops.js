@@ -37,7 +37,7 @@ function AllShops({ setSnackbar }) {
     setLoading(true);
     try {
       const shopRes = await axios.get(`/shops/getShops?limit=6&page=${page}`);
-      console.log(shopRes.data.data.shops);
+      // console.log(shopRes.data.data.shops);
       if (!isUnmounted) {
         if (shopRes.data.data.shops.length === 0) setNoMore(true);
         else {
@@ -47,7 +47,7 @@ function AllShops({ setSnackbar }) {
         setLoading(false);
       }
     } catch (error) {
-      console.log({ error });
+      // console.log({ error });
       let obj = {
         type: "error",
         time: Date.now(),

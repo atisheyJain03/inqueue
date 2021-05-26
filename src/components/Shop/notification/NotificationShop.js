@@ -81,7 +81,7 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
       .get(`/shops/waitingQueue/${user.shop}?page=${page}&limit=10`)
       .then((res) => {
         if (!isUnmounted) {
-          console.log(res.data.data.queue.waitingQueue);
+          // console.log(res.data.data.queue.waitingQueue);
           if (res.data.data.queue.waitingQueue.length === 0) setNoMore(true);
           else {
             setList([...list, ...res.data.data.queue.waitingQueue]);
@@ -107,7 +107,7 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
       .then((res) => {
         const newList = [...list];
         newList[index].status = type;
-        console.log(newList);
+        // console.log(newList);
         setList([...newList]);
       })
       .catch((err) => console.log(err));
@@ -128,7 +128,6 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
-          // onClick={handleClickNotification}
         >
           <BellIcon
             totalNotifications={totalNotifications}
@@ -159,8 +158,7 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
           >
             <Typography variant="h5">{listItem.service.name}</Typography>
             <Typography variant="h6">
-              {" "}
-              A new Request for Ticket By {listItem.user.name}{" "}
+              A new Request for Ticket By {listItem.user.name}
             </Typography>
             {!listItem.status ? (
               <div>

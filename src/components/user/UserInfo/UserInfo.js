@@ -26,7 +26,7 @@ function UserInfo({ setSnackbar }) {
   const classes = useStyles();
 
   const handleImage = (event) => {
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     setImage(event.target.files[0]);
     setImageName(event.target.files[0].name);
   };
@@ -46,7 +46,7 @@ function UserInfo({ setSnackbar }) {
           time: Date.now(),
         };
         setSnackbar({ ...obj });
-        console.log(res.data.data.user);
+        // console.log(res.data.data.user);
         setUser({ ...res.data.data.user });
         setImageName(null);
       })

@@ -18,7 +18,7 @@ function CardImage({ cardImage, setCardImage, shopId }) {
     axios
       .patch(`/shops/updateShop/cardPhoto/${shopId}`, fd)
       .then((res) => {
-        console.log({ res });
+        // console.log({ res });
         setCardImage(res.data.data.shop.cardPhoto);
       })
       .catch((err) => console.log({ err }));

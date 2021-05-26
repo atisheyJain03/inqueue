@@ -63,12 +63,12 @@ function SimpleDialog(props) {
       alert("Please select a service");
       return;
     }
-    console.log(phoneNumber, isNaN(phoneNumber));
-    console.log(
-      isNaN(phoneNumber),
-      phoneNumber < 1000000000,
-      phoneNumber > 9999999999
-    );
+    // console.log(phoneNumber, isNaN(phoneNumber));
+    // console.log(
+    //   isNaN(phoneNumber),
+    //   phoneNumber < 1000000000,
+    //   phoneNumber > 9999999999
+    // );
     if (
       isNaN(phoneNumber) ||
       phoneNumber < 1000000000 ||
@@ -88,11 +88,11 @@ function SimpleDialog(props) {
       .then((res) => {
         setLoading(false);
         setGenerated(res.data.data.ticket.number);
-        console.log({ res });
+        // console.log({ res });
       })
       .catch((err) => console.log({ err }));
 
-    console.log(name, phoneNumber);
+    // console.log(name, phoneNumber);
   };
   return (
     <>

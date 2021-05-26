@@ -32,7 +32,6 @@ function AddService({ services, setServices }) {
       <Grid item xs={12} sm={3}>
         <TextField
           variant="filled"
-          // onChange={(event) => setName(event.target.value)}
           inputRef={nameRef}
           fullWidth
           label="Service Name"
@@ -46,7 +45,6 @@ function AddService({ services, setServices }) {
           inputRef={priceRef}
           fullWidth
           label="Service Price"
-          // onChange={(event) => setPrice(event.target.value)}
         />
       </Grid>
       <Grid item xs={12} sm={3}>

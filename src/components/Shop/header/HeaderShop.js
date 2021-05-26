@@ -107,7 +107,7 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  console.log("header");
+  // console.log("header");
   const [user, setUser] = useContext(UserContext);
 
   // console.log(user);
@@ -165,8 +165,8 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
           <MenuItem
             onClick={() => {
               handleMobileMenuClose();
-              console.log("queue");
-              history.push("/shopQueue");
+              // console.log("queue");
+              history.push("/shopAccount/shopQueue");
             }}
           >
             {/* <IconButton>
@@ -175,7 +175,7 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
             <p>Profile</p> */}
             <p> Queue </p>
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             onClick={() => {
               handleMobileMenuClose();
               console.log("my shop");
@@ -183,12 +183,12 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
             }}
           >
             <p>My Shop</p>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             onClick={() => {
               handleMobileMenuClose();
-              console.log("settings");
-              //   history.push("/shopSettings");
+              // console.log("settings");
+              history.push("/shopAccount/settingsShop");
             }}
           >
             <p>Settings</p>
@@ -197,8 +197,8 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
       ) : (
         <MenuItem
           onClick={() => {
-            console.log("login");
-            // history.push("/login");
+            // console.log("login");
+            history.push("/login");
             handleMobileMenuClose();
           }}
         >
@@ -212,11 +212,7 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
     <div className={classes.grow}>
       <AppBar position="static" color="transparent">
         <Toolbar>
-          <img
-            // src={queueIcon}
-            className={classes.iconLogo}
-            onClick={() => history.push("/")}
-          />
+          <img className={classes.iconLogo} onClick={() => history.push("/")} />
           <Typography
             className={classes.title}
             variant="h6"
@@ -236,8 +232,8 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
                 <Button
                   onClick={() => {
                     handleMobileMenuClose();
-                    console.log("queue");
-                    history.push("/shopQueue");
+
+                    history.push("/shopAccount/shopQueue");
                   }}
                 >
                   Queue
@@ -249,8 +245,8 @@ export default function HeaderShop({ setSnackbar, searchBar }) {
                 <Button
                   onClick={() => {
                     handleMobileMenuClose();
-                    console.log("settings");
-                    //   history.push("/shopSettings");
+
+                    history.push("/shopAccount/settingsShop");
                   }}
                 >
                   Settings

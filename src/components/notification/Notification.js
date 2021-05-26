@@ -60,7 +60,7 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
 
   // console.log(user);
   const handleClick = (event) => {
-    console.log(page);
+    // console.log(page);
     setNoMore(false);
     setAnchorEl(event.currentTarget);
     setTotalNotifications(0);
@@ -80,7 +80,7 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
       .get(`/users/notifications/${user.id}?page=${page}&limit=10`)
       .then((res) => {
         if (!isUnmounted) {
-          console.log(res.data.data.notifications.notifications);
+          // console.log(res.data.data.notifications.notifications);
           if (res.data.data.notifications.notifications.length === 0)
             setNoMore(true);
           else {
@@ -108,7 +108,6 @@ export default function NotificationShop({ textAfterNotificationIcon }) {
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
-          // onClick={handleClickNotification}
         >
           <BellIcon
             totalNotifications={totalNotifications}

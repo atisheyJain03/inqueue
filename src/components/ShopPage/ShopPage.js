@@ -121,7 +121,7 @@ function ShopPage({ setSnackbar }) {
   // DROPDOWN ONCHANGE HANDLER
   const dropdownOnChange = (event) => {
     // VALUE FROM DROPDOWN (STORE ID)
-    console.log(event.target.value);
+    // console.log(event.target.value);
 
     // SEARCH OBJECT WITH SELECTED ID IN DROPDOWN TO STORE QUEUE DATA
     for (let i = 0; i < pageData.serviceBy.length; i++) {
@@ -272,8 +272,6 @@ function ShopPage({ setSnackbar }) {
                     style={{ marginTop: "2rem", marginLeft: "auto" }}
                     className={classes.dropdownRoot}
                   >
-                    {/* DROPDOWN REFRENCES VIDEO */
-                    /* https://www.youtube.com/watch?v=FTVL36d1gXY&t=351s&ab_channel=phpstepbystep */}
                     <Select
                       value={selectOption}
                       displayEmpty

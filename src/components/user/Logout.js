@@ -1,11 +1,13 @@
 import { useHistory } from "react-router-dom";
 import axios from "../../axios";
+import Cookies from "js-cookie";
 
 function LogoutFunction(setSnackbar) {
   (async () => {
     try {
-      await axios.get("/users/logout");
-      console.log("Logged out");
+      // await axios.get("/users/logout");
+      Cookies.remove("jwt");
+      // console.log("Logged out");
       let obj = {
         type: "success",
         time: Date.now(),
@@ -14,7 +16,7 @@ function LogoutFunction(setSnackbar) {
       setSnackbar({ ...obj });
       window.location.replace(`${window.location.origin}`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   })();
 }

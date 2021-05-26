@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
 import axios from "../../axios";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,6 +73,10 @@ export default function Login({ setSnackbar }) {
         },
       })
       .then((res) => {
+        // console.log(res);
+        Cookies.set("jwt", res.data.token, {
+          expires: 90,
+        });
         const obj = {
           type: "success",
           message: "Logged in Successfully",
