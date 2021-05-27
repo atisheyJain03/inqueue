@@ -1,4 +1,10 @@
-# This is Virtual Queue Management system in which a percen can create a ticket without physically present at the location
+# This is Virtual Queue Management Application in which a person can create a ticket without physically present at the location
+
+## The purpose of making this application is 
+
+- To save time so that we don't need to stant in the queue for long time
+- Effective use of time as person can be present in more than one queue at a time by not even physically present at any location
+- It can be used to reduce unnecessary crowd so that people can maintain social distancing effectively
 
 ## FEATURES
 
