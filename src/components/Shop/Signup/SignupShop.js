@@ -76,8 +76,8 @@ export default function SignUpShop({ setSnackbar }) {
         });
         setSnackbar({ ...obj });
         setShowInstructions(true);
-        // history.push("/");
-        // window.location.reload();
+        history.push("/");
+        window.location.reload();
       })
       .catch((error) => {
         // console.log({ error });

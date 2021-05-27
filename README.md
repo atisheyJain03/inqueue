@@ -1,68 +1,75 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# This is Virtual Queue Management system in which a percen can create a ticket without physically present at the location
 
-## Available Scripts
+## FEATURES
 
-In the project directory, you can run:
+- There are two different dashboards for regukar users and store owners(admin)
+- A user can create tickets for more then 1 store at a time
+- Can get update of current active number in queue and total numbers in queue
+- Don't need to relogin every time you visit website
+- User info will be saved in cookie for 7 days hence no need to login again when refresh
 
-### `yarn start`
+## Tools And Technology used-
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React.js for frontend
+- Material-UI
+- node.js/ExpressJs API for backend [Api source code](https://github.com/atisheyJain03/inqueue_backend)
+- socket.io for realtime functionality
+- Mongodb with mongoose for database
+- jwt
+- Hosted on firebase
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### HomePage
 
-### `yarn test`
+![HomePage](./readme_images/Homepage.png)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# USER DASHBOARD
 
-### `yarn build`
+### Login/SignIn (Existing Users)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Login picture](./readme_images/Login.png)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- Click on Login button on HomePage
+- Enter Email and Password and then click SignIN button
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Signup
 
-### `yarn eject`
+![SignUp picture](./readme_images/SignUp.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Go to Login Page and click on Don't have an account? Sign Up
+- Enter Name,Email,Password,Password Confirm
+- Click on Signup button
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### All Shops amd services
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![All Shops picture](./readme_images/All_Shops.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- To see all shops click on Shop And Services button on HomePage
+- After that a page like shown above will be open where you can click on the shop for which you need a ticket
 
-## Learn More
+### Token Generation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Token](./readme_images/info.png)
+![Token](./readme_images/Generate_ticket_user.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- To generate a token click on a shop for which you want to generate a token
+- Select a service (There can be many services offered by a shop for Example if it is a hospital there can be different Queues for Different Labs or different doctors)
+- After that click on Generate a token button
+- A request for a token will be sent to the Shop Admin
+- After the Response of the shop owner you will get a notification which you can see by click on bell icon on navbar
 
-### Code Splitting
+### Get Information about all Tickets
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+![Token](./readme_images/My_tickets.png)
 
-### Analyzing the Bundle Size
+- To know status of all tokens click on avatar icon on navbar
+- Here you will get all information about the token
+- There can be three status of the token waiting,accepted or rejected
+- user can cancel token by clicking on cancel button
+- By clicking on Icon on top left corner A drawer will be open
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Other Settings
 
-### Making a Progressive Web App
+![More Settings](./readme_images/my_info.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- By click on user info on Drawer user can change there name and profile Picture
+- By clicking on Logout Button user can logout
