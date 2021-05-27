@@ -57,7 +57,7 @@
 ![Token](./readme_images/Generate_ticket_user.png)
 
 - To generate a token click on a shop for which you want to generate a token
-- Select a service (There can be many services offered by a shop for Example if it is a hospital there can be different Queues for Different Labs or different doctors)
+- Select an option (There can be many services offered by a shop for Example if it is a hospital there can be different Queues for Different Labs or different doctors)
 - After that click on Generate a token button
 - A request for a token will be sent to the Shop Admin
 - After the Response of the shop owner you will get a notification which you can see by click on bell icon on navbar
