@@ -5,8 +5,7 @@
 - There are two different dashboards for regukar users and store owners(admin)
 - A user can create tickets for more then 1 store at a time
 - Can get update of current active number in queue and total numbers in queue
-- Don't need to relogin every time you visit website
-- User info will be saved in cookie for 7 days hence no need to login again when refresh
+- User info will be saved in cookie for 90 days hence no need to login again when refresh
 
 ## Tools And Technology used-
 
@@ -59,7 +58,7 @@
 
 ### Get Information about all Tickets
 
-![Token](./readme_images/My_tickets.png)
+![Token](./readme_images/My_ticket.png)
 
 - To know status of all tokens click on avatar icon on navbar
 - Here you will get all information about the token
@@ -73,3 +72,41 @@
 
 - By click on user info on Drawer user can change there name and profile Picture
 - By clicking on Logout Button user can logout
+
+# SHOP ADMIN DASHBOARD
+
+### Login
+
+![Login picture](./readme_images/admin_login.png)
+
+- Click on Become A Partner button on HomePage
+- Enter Email and Password and then click on SignIN button
+
+### New Account
+
+![SignUp picture](./readme_images/SignUp.png)
+
+- To create a new account click on Want to register a new Shop/services
+- A new Shop Account will be created with default settings you can change settings by click on settings button on navbar
+
+### Settings
+
+![Settings Shop](./readme_images/settings.png)
+![Settings Shop](./readme_images/Settings2.png)
+![Settings Shop](./readme_images/shop_settings.png)
+
+- You can change Shop settings by click on settings button on Navbar
+
+### Queue
+
+![Queue Info](./readme_images/Admin_Queue_info.png)
+
+- By clicking Queue Button you can get/change Queue number
+- Select a service of which you want to change info
+- admin can see all customers info in this section
+
+### Generate a Ticket
+
+![Queue Info](./readme_images/Generate_A_ticket.png)
+
+- shop admin can generate a ticket by clicking on generate a ticket button on navbar
