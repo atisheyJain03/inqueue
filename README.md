@@ -21,6 +21,7 @@
 - socket.io for realtime functionality
 - Mongodb with mongoose for database
 - jwt
+- HTML,CSS,javascript
 - Hosted on firebase
 
 ### HomePage
